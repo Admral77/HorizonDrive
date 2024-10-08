@@ -24,7 +24,7 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            fetch('http://your_server_ip:8080/ocs/v1.php/cloud/users', {
+            fetch('http://192.168.86.25:8080/ocs/v1.php/cloud/users', {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Basic ' + btoa('admin:adminpassword'), // Base64 encode your admin credentials

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Storage Signup</title>
+</head>
+<body>
+    <h1>Sign Up for Unlimited Cloud Storage</h1>
+    <form id="signup-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <button type="submit">Create Account</button>
+    </form>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch('http://your_server_ip:8080/ocs/v1.php/cloud/users', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Basic ' + btoa('admin:adminpassword'), // Base64 encode your admin credentials
+                    'OCS-APIRequest': 'true',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `userid=${username}&password=${password}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ocs.meta.status === 'ok') {
+                    alert('User created successfully');
+                } else {
+                    alert('Error creating user: ' + data.ocs.meta.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
